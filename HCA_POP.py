@@ -7,18 +7,14 @@ Created on Wed Apr  6 02:30:10 2022
 from sklearn.datasets import load_wine
 import pandas as pd
 import numpy as np
-import statistics as st
-import string
 
-# import i obróbka danych
+# import test data
 wine = load_wine()
 data1 = pd.DataFrame(data=np.c_[wine['data'], wine['target']], columns=wine['feature_names']+['target'])
 data = data1.iloc[:5]
-data = data.drop('target', axis = 1)
+data = data.drop('target', axis=1)
 
-
-
-#autoskalowanie danych
+# scaling of data
 
 mean_df = data.mean(axis=0)
 std_df = data.std(axis=0)
@@ -28,12 +24,12 @@ i = 0
 
 for dot in data.columns:
     ascaled = (data[dot]-mean_df[i])/std_df[i]
-    i+=1
+    i += 1
     df1.append(ascaled)
 
 df2 = pd.concat(df1, axis=1)
 
-#dodanie indeksow literowych do wierszy
+# [optional: adding letter index]
 
 # kal = list(string.ascii_uppercase)
 # ind=[]
@@ -45,9 +41,7 @@ df2 = pd.concat(df1, axis=1)
 # df2.index = ind
 df = df2
 
-
-
-#macierz odległosci euklidesowych
+# macierz odległosci euklidesowych
 
 def df_odl_eukl(df):
     
@@ -95,7 +89,7 @@ min_value_lits = []
 list_coord_name = []
 empty_list = []
 coord_list = []
-while X.size >= 4:
+while len(X) >= 0:
 
     triangle = pd.DataFrame(np.tril(X), columns = X.columns, index = X.index)
     # triangle = np.tril(X)
@@ -178,8 +172,6 @@ while X.size >= 4:
     X.rename(index={X.index[coord2]: new_name}, inplace=True)
     
 
-
-
     # input('kjas')
     # input()
     
@@ -187,4 +179,4 @@ print(full_dict)
 
 
 
-#it works!
+# it works!
