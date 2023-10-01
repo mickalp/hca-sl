@@ -26,7 +26,7 @@ for dot in data.columns:
     ascaled = (data[dot]-mean_df[i])/std_df[i]
     i += 1
     df1.append(ascaled)
-
+# df2 = autoscaled data
 df2 = pd.concat(df1, axis=1)
 
 # [optional: adding letter index]
@@ -41,7 +41,7 @@ df2 = pd.concat(df1, axis=1)
 # df2.index = ind
 df = df2
 
-# macierz odległosci euklidesowych
+# euclidean distance matrix
 
 def df_odl_eukl(df):
     
@@ -74,8 +74,6 @@ df_odl = np.tril(df_oe)
 X = df_oe.copy()
 
 
-#%%
-
 
 Z = X.copy()
 
@@ -95,9 +93,6 @@ while len(X) >= 0:
     # triangle = np.tril(X)
     triangle_flat = np.array(triangle).flatten()
     
-    # print(triangle)
-    
-    
     min1 = min(i for i in triangle_flat if i > 0)
     coord = (np.where(triangle == min1))
     lista_tych_coordow.append(coord)
@@ -105,23 +100,17 @@ while len(X) >= 0:
     coord1 = max(coord)[0]
     coord2 = min(coord)[0]
     
-    
     lista_cor = X.iloc[coord1].name, X.iloc[coord2].name
     coord_list.append(lista_cor)
     
     new_name = next(nazwy)
-    
-    #liczenie iosci obiektow w klastrze
+
 
     nazwy_col = []
-
-   
-        
-
     for i in range(0, len(Z)): 
         nazwy_col.append(Z.columns[i])
-    #trzeba bedzie zmienic zeby to były tylko liczby od 0 do len(data)
-    #bo inaczej zawsze te wartosci beda przy zmianie indeksow w macierzy
+
+    
     if X.iloc[coord1].name in nazwy_col and X.iloc[coord2].name in nazwy_col:
         
         # new_dict = {new_name: 2}
