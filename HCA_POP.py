@@ -151,8 +151,6 @@ while len(X) >= 0:
     X.drop(X.index[coord1], axis=0, inplace = True)
 
 
-    
-
     # X = X.set_axis(list(range(len(X.index))), axis = 0)
     # X = X.set_axis(list(range(len(X.index))), axis = 1)
    
@@ -161,11 +159,9 @@ while len(X) >= 0:
     X.rename(index={X.index[coord2]: new_name}, inplace=True)
     
 
-    # input('kjas')
-    # input()
     
 print(full_dict)
 
 
 
-# it works!
+
