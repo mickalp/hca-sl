@@ -1,4 +1,3 @@
-
 from sklearn.datasets import load_wine
 import pandas as pd
 import numpy as np
@@ -201,16 +200,15 @@ HCA_complete = HCA(X)
 
 # =============================================================================
 # Takes final matrix from HCA, and generate dendrogram by use of libraries
-# 
 # =============================================================================
 
 fig = plt.figure(figsize=(12, 7))
 dendrogram = sch.dendrogram(HCA_complete) #put the name of variable which contains 
                                     #objects, min_values and number of obj in cluster
-plt.title('Dendrogram')
-plt.xlabel('Obiekty')
-plt.ylabel('Euclidean distance')
-plt.show()
+# plt.title('Dendrogram')
+# plt.xlabel('Obiekty')
+# plt.ylabel('Euclidean distance')
+# plt.show()
 
 test_mat = complete(pdist(df)) #if this is the same as matrix last
 #then you do a good job!
