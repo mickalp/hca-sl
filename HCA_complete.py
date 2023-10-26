@@ -17,8 +17,17 @@ data = data.drop('target', axis = 1)
 
 #autoscailing data
 
-def autoscale(df:pd.DataFrame) -> pd.DataFrame:
+def autoscale(data:pd.DataFrame) -> pd.DataFrame:
 
+    """ Autoscale the data by substraction mean value and dividing by standard deviation
+    >>> import pandas as pd
+    >>> df_t = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})
+    >>> autoscale(df_t)
+         A    B
+    0 -1.0 -1.0
+    1  0.0  0.0
+    2  1.0  1.0
+    """
     mean_df = data.mean(axis=0)
     std_df = data.std(axis=0)
     
@@ -30,8 +39,7 @@ def autoscale(df:pd.DataFrame) -> pd.DataFrame:
         i+=1
         df1.append(ascaled)
     
-    df2 = pd.concat(df1, axis=1)
-    df = df2
+    df = pd.concat(df1, axis=1)
     return df
 
 df = autoscale(data)
