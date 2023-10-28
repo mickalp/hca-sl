@@ -10,8 +10,7 @@ import matplotlib.pyplot as plt
 
 wine = load_wine()
 data1 = pd.DataFrame(data=np.c_[wine['data'], wine['target']], columns=wine['feature_names']+['target'])
-data = data1.iloc[:26]
-data = data.drop('target', axis = 1)
+data = data1.iloc[:26].drop('target', axis = 1)
 
 
 
@@ -91,7 +90,7 @@ X = df_oe.copy()
 
 
 
-def HCA(distance_matrix: pd.DataFrame) -> pd.DataFrame:
+def HCA(distance_matrix: pd.DataFrame, method = 'complete') -> pd.DataFrame:
     
     """
 
@@ -138,23 +137,23 @@ def HCA(distance_matrix: pd.DataFrame) -> pd.DataFrame:
     
         names_col = []
     
-    
-        for i in range(0, len(Z)): 
-            names_col.append(Z.columns[i])
-    
-        if X.iloc[coord1].name in names_col and X.iloc[coord2].name in names_col:
-            full_dict[new_name] = 2
-            
-        elif (X.iloc[coord1].name in names_col and X.iloc[coord2].name not in names_col):
-            full_dict[new_name] =  1 + full_dict.get(X.iloc[coord2].name)
-            
-        elif (X.iloc[coord1].name not in names_col and X.iloc[coord2].name in names_col):
-            full_dict[new_name] = 1 + full_dict.get(X.iloc[coord1].name)
-            
-        else:
-            full_dict[new_name] = full_dict.get(X.iloc[coord1].name) + full_dict.get(X.iloc[coord2].name)
-                        
-                        
+        if method == "complete":
+            for i in range(0, len(Z)): 
+                names_col.append(Z.columns[i])
+        
+            if X.iloc[coord1].name in names_col and X.iloc[coord2].name in names_col:
+                full_dict[new_name] = 2
+                
+            elif (X.iloc[coord1].name in names_col and X.iloc[coord2].name not in names_col):
+                full_dict[new_name] =  1 + full_dict.get(X.iloc[coord2].name)
+                
+            elif (X.iloc[coord1].name not in names_col and X.iloc[coord2].name in names_col):
+                full_dict[new_name] = 1 + full_dict.get(X.iloc[coord1].name)
+                
+            else:
+                full_dict[new_name] = full_dict.get(X.iloc[coord1].name) + full_dict.get(X.iloc[coord2].name)
+                            
+                            
     
         
         wektor = []
@@ -211,12 +210,11 @@ HCA_complete = HCA(X)
 # =============================================================================
 
 fig = plt.figure(figsize=(12, 7))
-dendrogram = sch.dendrogram(HCA_complete) #put the name of variable which contains 
-                                    #objects, min_values and number of obj in cluster
-# plt.title('Dendrogram')
-# plt.xlabel('Obiekty')
-# plt.ylabel('Euclidean distance')
-# plt.show()
+dendrogram = sch.dendrogram(HCA_complete)
+plt.title('Dendrogram')
+plt.xlabel('Obiekty')
+plt.ylabel('Euclidean distance')
+plt.show()
 
 test_mat = complete(pdist(df)) #if this is the same as matrix last
 #then you do a good job!
