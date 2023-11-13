@@ -137,41 +137,50 @@ def HCA(distance_matrix: pd.DataFrame, method = 'complete') -> pd.DataFrame:
     
         names_col = []
     
-        if method == "complete":
-            for i in range(0, len(Z)): 
-                names_col.append(Z.columns[i])
-        
-            if X.iloc[coord1].name in names_col and X.iloc[coord2].name in names_col:
-                full_dict[new_name] = 2
-                
-            elif (X.iloc[coord1].name in names_col and X.iloc[coord2].name not in names_col):
-                full_dict[new_name] =  1 + full_dict.get(X.iloc[coord2].name)
-                
-            elif (X.iloc[coord1].name not in names_col and X.iloc[coord2].name in names_col):
-                full_dict[new_name] = 1 + full_dict.get(X.iloc[coord1].name)
-                
-            else:
-                full_dict[new_name] = full_dict.get(X.iloc[coord1].name) + full_dict.get(X.iloc[coord2].name)
-                            
-                            
+
+        for i in range(0, len(Z)): 
+            names_col.append(Z.columns[i])
     
+        if X.iloc[coord1].name in names_col and X.iloc[coord2].name in names_col:
+            full_dict[new_name] = 2
+            
+        elif (X.iloc[coord1].name in names_col and X.iloc[coord2].name not in names_col):
+            full_dict[new_name] =  1 + full_dict.get(X.iloc[coord2].name)
+            
+        elif (X.iloc[coord1].name not in names_col and X.iloc[coord2].name in names_col):
+            full_dict[new_name] = 1 + full_dict.get(X.iloc[coord1].name)
+            
+        else:
+            full_dict[new_name] = full_dict.get(X.iloc[coord1].name) + full_dict.get(X.iloc[coord2].name)
+                        
+                        
+
         
         wektor = []
         
+        if method == "complete":
+            for i in range(len(X)):
+                if X.iloc[coord1,i] == 0:
+                    wektor.append(X.iloc[coord1,i])
+                
+                elif X.iloc[coord2,i] == 0:
+                    wektor.append(X.iloc[coord2,i])
+                
+                elif X.iloc[coord1,i] > X.iloc[coord2,i]:
+                    wektor.append(X.iloc[coord1, i])
         
-        for i in range(len(X)):
-            if X.iloc[coord1,i] == 0:
-                wektor.append(X.iloc[coord1,i])
+                else:
+                    wektor.append(X.iloc[coord2, i])
+                    
+                    
+        if method == "single":
             
-            elif X.iloc[coord2,i] == 0:
-                wektor.append(X.iloc[coord2,i])
-            
-            elif X.iloc[coord1,i] > X.iloc[coord2,i]:
-                wektor.append(X.iloc[coord1, i])
-    
-            else:
-                wektor.append(X.iloc[coord2, i])
-    
+            for i in range(len(X)):
+                if X.iloc[coord1,i] > X.iloc[coord2,i]:
+                    wektor.append(X.iloc[coord2, i])
+                    
+                else:
+                    wektor.append(X.iloc[coord1, i])
               
         X.iloc[coord2] = wektor
         X.iloc[:, coord2] = wektor
@@ -201,7 +210,7 @@ def HCA(distance_matrix: pd.DataFrame, method = 'complete') -> pd.DataFrame:
         
         
 
-HCA_complete = HCA(X)
+HCA_complete = HCA(X, method = 'single')
 
 
 
