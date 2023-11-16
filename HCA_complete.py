@@ -181,6 +181,8 @@ def HCA(distance_matrix: pd.DataFrame, method = 'complete') -> pd.DataFrame:
                     
                 else:
                     wektor.append(X.iloc[coord1, i])
+
+
               
         X.iloc[coord2] = wektor
         X.iloc[:, coord2] = wektor
@@ -210,7 +212,7 @@ def HCA(distance_matrix: pd.DataFrame, method = 'complete') -> pd.DataFrame:
         
         
 
-HCA_complete = HCA(X, method = 'single')
+HCA_complete = HCA(X, method = 'complete')
 
 
 
